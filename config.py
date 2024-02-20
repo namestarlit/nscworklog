@@ -21,6 +21,6 @@ encoded_user = quote(MONGODB_USER, safe="")
 encoded_password = quote(MONGODB_PASSWORD, safe="")
 
 # Create database URI
-MONGODB_URI = f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@{MONGODB_HOST}:{MONGODB_PORT}/{MONGODB_DATABASE}?authSource=admin"
+MONGODB_URI = f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@{MONGODB_HOST}:{MONGODB_PORT}/{MONGODB_DATABASE}?authSource={MONGODB_DATABASE}"
 # Other shared configuration variables
 SECRET_KEY = getenv("SECRET_KEY", "default_secret_key")
