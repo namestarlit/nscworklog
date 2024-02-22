@@ -16,6 +16,10 @@ MONGODB_HOST = getenv("MONGODB_HOST")
 MONGODB_PORT = getenv("MONGODB_PORT")
 MONGODB_DATABASE = getenv("MONGODB_DATABASE")
 
+# Get collections from environment variable and split them
+DB_COLLECTIONS = getenv("DB_COLLECTIONS", "").split(",")
+DB_COLLECTIONS = [collection.strip() for collection in DB_COLLECTIONS]
+
 # URL encode the username and password
 encoded_user = quote(MONGODB_USER, safe="")
 encoded_password = quote(MONGODB_PASSWORD, safe="")
