@@ -61,9 +61,12 @@ class User(Base):
     def password(self, new_password):
         """Setter for the password property"""
         # Hashes the provided password and stores it
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), salt)
-        self.__password = hashed_password
+        if isinstance(new_password, bytes):
+            self.__password = new_password
+        else:
+            salt = bcrypt.gensalt()
+            hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), salt)
+            self.__password = hashed_password
 
     def check_password(self, password):
         """Verify a provided password against the stored hash"""
