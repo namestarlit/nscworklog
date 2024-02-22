@@ -25,6 +25,7 @@ media
 
 # Distribution / packaging
 .Python
+.python-version
 build/
 develop-eggs/
 dist/
