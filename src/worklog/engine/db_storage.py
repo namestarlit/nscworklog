@@ -27,9 +27,13 @@ class DBStorage:
     def __init__(self):
         """Initializes the DBStorage instance"""
         if not hasattr(self, "_initialized"):
-            self.__client = MongoClient(MONGODB_URI)
+            self.__client = MongoClient(MONGODB_URI, maxPoolSize=10)
             self.__db = self.__client[MONGODB_DATABASE]
             self._initialized = True
+
+    def close(self):
+        """Close the MongoDB client"""
+        self.__client.close()
 
     def all(self, collection: str = None, user_id: str = None):
         """Retrieve all documents"""
@@ -55,7 +59,7 @@ class DBStorage:
                 documents.append(self.__get_instance(collection, doc))
 
         if collection and user_id:
-            docs = self.__db[collection].find({"_id": user_id})
+            docs = self.__db[collection].find({"user_id": user_id})
             for doc in docs:
                 documents.append(self.__get_instance(collection, doc))
 
@@ -80,35 +84,36 @@ class DBStorage:
             return self.__get_instance(collection, doc)
         return None
 
-    def add(self, collection: str, obj: dict):
+    def add(self, obj):
         """Add a new document"""
-        if not isinstance(collection, str):
-            raise TypeError("Collection must be a string")
-        if not isinstance(obj, dict):
-            raise TypeError("Object must be a dictionary")
+        # Get collection of an object
+        collection = self.__get_collection(obj)
+
         if not self.__is_collection(collection):
             return "Collection not found"
 
         # Modify object keys
+        obj = obj.to_dict()
         obj = self.__modify_keys(obj)
 
         # Insert the document and return the _id of the inserted document
         return self.__db[collection].insert_one(obj).inserted_id
 
-    def update(self, collection: str, doc_id: str, obj: dict):
+    def update(self, doc_id: str, obj):
         """Update a document"""
-        if not isinstance(collection, str):
-            raise TypeError("Collection must be a string")
         if not isinstance(doc_id, str):
             raise TypeError("Document ID must be a string")
-        if not isinstance(obj, dict):
-            raise TypeError("Object must be a dictionary")
+
+        # Get collection and object dictionary
+        collection = self.__get_collection(obj)
+        obj = obj.to_dict()
+
+        # Modify keys in the obj dict
+        obj = self.__modify_keys(obj)
 
         # Remove keys not to update from the obj
-        obj = self.__modify_keys(obj)
-        for key, value in obj.items():
-            if key in ["_id", "created_at", "updated_at"]:
-                obj.pop(key, None)
+        for key in ["_id", "created_at", "updated_at"]:
+            obj.pop(key, None)
 
         # Update a document using $set and $currentDate
         self.__db[collection].update_one(
@@ -144,15 +149,18 @@ class DBStorage:
 
         return count
 
-    def close(self):
-        """Close the MongoDB client"""
-        self.__client.close()
+    def __is_collection(self, collection: str):
+        """Check if the collection is available"""
+        if not isinstance(collection, str):
+            raise TypeError("Collection must be a string")
 
-    def __is_collection(self, collection):
         return collection in DB_COLLECTIONS
 
-    def __modify_keys(self, obj):
+    def __modify_keys(self, obj: dict):
         """Modify keys by removing class prefix"""
+        if not isinstance(obj, dict):
+            raise TypeError("Object must be a dictionary")
+
         modified_obj = {}
 
         for key, value in obj.items():
@@ -177,3 +185,13 @@ class DBStorage:
         else:
             # Handle the case where the collection is not mapped to any class
             raise ValueError(f"Collection '{collection}' is not mapped to any class.")
+
+    def __get_collection(self, obj):
+        """Gets the collection name of an object"""
+        if not any(isinstance(obj, cls) for cls in self.object_mappings.values()):
+            raise TypeError("Object must be an instance of User or Worklog class")
+
+        for key, value in self.object_mappings.items():
+            # check if obj is an instance of the class in the object_mappings
+            if isinstance(obj, value):
+                return key

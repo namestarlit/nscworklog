@@ -18,7 +18,10 @@ class Base:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     try:
-                        value = datetime.strptime(value, ISO_FORMAT)
+                        if isinstance(value, datetime):
+                            setattr(self, key, value)
+                        else:
+                            value = datetime.strptime(value, ISO_FORMAT)
                     except ValueError as e:
                         raise e
 
@@ -46,8 +49,14 @@ class Base:
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].isoformat()
 
-        # Delete unwanted keys
-        for key in [""]:
+        return new_dict
+
+    def safe_dict(self):
+        """Gets an object dictionary without personal info"""
+        new_dict = self.to_dict()
+
+        # Remove personal info
+        for key in ["_User__email", "_User__password"]:
             new_dict.pop(key, None)
 
         return new_dict
