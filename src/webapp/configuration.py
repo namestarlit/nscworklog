@@ -1,5 +1,5 @@
 """Flask configuration module"""
-from config import import SECRET_KEY
+from config import SECRET_KEY
 
 
 class Config:

@@ -26,5 +26,10 @@ encoded_password = quote(MONGODB_PASSWORD, safe="")
 
 # Create database URI
 MONGODB_URI = f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@{MONGODB_HOST}:{MONGODB_PORT}/{MONGODB_DATABASE}?authSource={MONGODB_DATABASE}"
-# Other shared configuration variables
+
+# Flask configuration
 SECRET_KEY = getenv("SECRET_KEY", "default_secret_key")
+
+# Get Flask host IP and port number
+WORKLOG_HOST = getenv("WORKLOG_HOST", "0.0.0.0")
+WORKLOG_PORT = getenv("WORKLOG_PORT", "5000")
