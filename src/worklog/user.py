@@ -71,8 +71,14 @@ class User(Base):
     def check_password(self, password):
         """Verify a provided password against the stored hash"""
         if self.__password:
-            hashed_password = self.__password.encode("utf-8")
+            if isinstance(self.__password, bytes):
+                hashed_password = self.__password
+            else:
+                hashed_password = self.__password.encode("utf-8")
+
+            # convert password to Bytes
             password = password.encode("utf-8")
+
             return bcrypt.checkpw(password, hashed_password)
         return False
 
