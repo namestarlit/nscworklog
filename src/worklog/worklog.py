@@ -1,6 +1,5 @@
 """worklog class"""
 
-import re
 from worklog.base import Base
 
 
