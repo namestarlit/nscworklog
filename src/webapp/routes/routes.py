@@ -1,5 +1,5 @@
 from webapp import app
-from flask import render_template
+from flask import render_template, jsonify
 from worklog import storage
 
 
@@ -19,4 +19,4 @@ def index(user_id):
         for key in ["_id", "created_at", "updated_at", "user_id"]:
             worklog.pop(key, None)
 
-    return render_template("index.html", worklogs=worklogs)
+    return jsonify(worklogs)
