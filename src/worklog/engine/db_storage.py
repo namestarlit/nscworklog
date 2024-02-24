@@ -84,6 +84,18 @@ class DBStorage:
             return self.__get_instance(collection, doc)
         return None
 
+    def get_user_by_filter(self, key: str, value: str):
+        """Get user by username"""
+        if not isinstance(key, str):
+            raise TypeError("Key must be a string")
+        if not isinstance(value, str):
+            raise TypeError("Value must be a string")
+        user = self.__db[DB_COLLECTIONS[0]].find_one({key: value})
+        if user is None:
+            return None
+
+        return self.__get_instance(DB_COLLECTIONS[0], user)
+
     def add(self, obj):
         """Add a new document"""
         # Get collection of an object
