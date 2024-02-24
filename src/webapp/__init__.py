@@ -8,5 +8,8 @@ app.url_map.strict_slashes = False
 app.config.from_object(Config)
 
 login = LoginManager(app)
+login.login_view = "login"
 
+from webapp.models import forms
 from webapp.routes import routes
+from webapp.routes import errors

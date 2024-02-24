@@ -15,11 +15,11 @@ def load_user(id):
 class User(UserMixin, User):
     """User class implementantion"""
 
-    def __init__(self,username, email, password, *args, **kwargs):
+    def __init__(self, username, email, password, *args, **kwargs):
         """Initializes an instance of User class"""
         super().__init__(username, email, password, *args, **kwargs)
 
     def avatar(self, size):
         """Gets a user's profile picture."""
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
         return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
