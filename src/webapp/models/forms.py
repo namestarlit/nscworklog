@@ -10,20 +10,20 @@ from worklog import storage
 class LoginForm(FlaskForm):
     """A LoginForm class definition."""
 
-    username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember_me = BooleanField("Remember Me")
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "Enter your username"})
+    password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Enter your password"})
+    remember_me = BooleanField("Remember_me")
     submit = SubmitField("Sign In")
 
 
 class RegistrationForm(FlaskForm):
     """A RegistrationForm class definition."""
 
-    username = StringField("Username", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "Enter your username"})
+    email = StringField("Email", validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})
+    password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Enter password"})
     password_2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
+        "Confirm password", validators=[DataRequired(), EqualTo("password")], render_kw={"placeholder": "Confirm password"}
     )
     submit = SubmitField("Register")
 
@@ -32,7 +32,7 @@ class RegistrationForm(FlaskForm):
         user = storage.get_user_by_filter("username", username)
         if user is not None:
             raise ValidationError(
-                "username taken, please choose " "a different username"
+                "Username taken, " "please choose a different username."
             )
 
     def validate_email(self, email):
@@ -40,7 +40,7 @@ class RegistrationForm(FlaskForm):
         user = storage.get_user_by_filter("email", email)
         if user is not None:
             raise ValidationError(
-                "email address already exists, " "please use a different email address."
+                "Email address already exists, " "please use a different email address."
             )
 
 
@@ -59,5 +59,5 @@ class EditProfileForm(FlaskForm):
             user = storage.get_user_by_filter("username", username)
             if user is not None:
                 raise ValidationError(
-                    "username taken, please choose " "a different username"
+                    "Username taken, " "please choose a different username."
                 )
