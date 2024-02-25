@@ -1,29 +1,50 @@
-{% extends "base.html" %}
+<!-- {% extends "base.html" %} -->
 
-{% block content %}
+<!-- {% block content %} -->
 
-  <h1>Sign In</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/styles/login-signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
 
-    <p>
-    {{ form.username.label }}<br>
-    {{ form.username(size=32) }}<br>
-    {% for error in form.username.errors %}
-	    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-    </p>
-    <p>
-    {{ form.password.label }}<br>
-    {{ form.password(size=32) }}<br>
-    {% for error in form.password.errors %}
-	    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-    </p>
-    <p>{{ form.remember_me() }} {{ form.remember_me.label }} </p>
-    <p>{{ form.submit() }}</p>
-  </form>
+<body>
+    <div class="wrapper">
+        <h1>Login</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.username() }}
+                {% for error in form.username.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.password() }}
+                {% for error in form.password.errors %}
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="remember-me">
+                {{ form.remember_me.label }}
+                {{ form.remember_me(class="remember-me-checkbox") }}
+            </div>
+            <div>
+                {{ form.submit(class="button") }}
+            </div>
+        </form>
+        <div class="member">
+            Don't have an account? <a class="member" href="{{ url_for('register') }}">
+                Register Now
+            </a>
+        </div>
+    </div>
+</body>
 
-  <p>New User?<a href="{{ url_for('register') }}">Click here to Register!</a></p>
-{% endblock %}
+</html>
+
+<!-- {% endblock %} -->
