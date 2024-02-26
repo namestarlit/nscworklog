@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" >
-  <head>
-    <meta charset="utf-8" >
-    <meta name="viewport" content="width=device-width, initial-scale=1" >
+<html lang="en">
 
-    {% if title %}
-      <title>{% block title %}{% endblock %} - nscworklog </title>
-    {% else %}
-      <title>Welcome to nscworklog</title>
-    {% endif %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block title %}{% endblock %}
+  <link rel="stylesheet" href="../static/styles/base.css">
+  {% block links %}{% endblock %}
+</head>
 
-    {% block links %}
-      <link rel="stylesheet" href="styles/main.css" >
-    {% endblock %}
-  </head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <div class="logo-img">
+          <img src="../static/png/logs.png" alt="Work Log Logo" id="work-log-logo">
+        </div>
+        <a href="/" class="logo-header">Work Log</a>
+      </div>
+      <ul class="right-nav">
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <body>
-    <header>
-      <nav>
-      </nav>
-    </header>
+  {% block content %}{% endblock %}
 
-    {% block content %}{% endblock %}
+  <footer>
+    <p id="cpyrght">&copy; 2024 Work Log. All rights reserved.</p>
+  </footer>
+</body>
 
-    <footer>
-    </footer>
-  </body>
 </html>
