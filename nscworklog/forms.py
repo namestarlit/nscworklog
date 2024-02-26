@@ -11,12 +11,10 @@ class LoginForm(FlaskForm):
     """A LoginForm class definition."""
 
     username = StringField(
-        "Username",
         validators=[DataRequired()],
         render_kw={"placeholder": "Enter your username"},
     )
     password = PasswordField(
-        "Password",
         validators=[DataRequired()],
         render_kw={"placeholder": "Enter your password"},
     )
@@ -28,22 +26,18 @@ class RegistrationForm(FlaskForm):
     """A RegistrationForm class definition."""
 
     username = StringField(
-        "Username",
         validators=[DataRequired()],
         render_kw={"placeholder": "Enter your username"},
     )
     email = StringField(
-        "Email",
         validators=[DataRequired(), Email()],
         render_kw={"placeholder": "Enter your email"},
     )
     password = PasswordField(
-        "Password",
         validators=[DataRequired()],
         render_kw={"placeholder": "Enter password"},
     )
     password_2 = PasswordField(
-        "Confirm password",
         validators=[DataRequired(), EqualTo("password")],
         render_kw={"placeholder": "Confirm password"},
     )
@@ -69,7 +63,7 @@ class RegistrationForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     """A EditProfileForm class definition."""
 
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField(validators=[DataRequired()])
     submit = SubmitField("Save")
 
     def __init__(self, original_username, *args, **kwargs):
@@ -83,3 +77,11 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError(
                     "Username taken, " "please choose a different username."
                 )
+
+class AddWorklogForm(FlaskForm):
+    """Adds a new worklog entry"""
+
+    add_worklog = StringField(
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Add a worklog, press [ Enter ] to save"},
+    )
