@@ -13,7 +13,8 @@ from webapp.models.forms import LoginForm, RegistrationForm, EditProfileForm
 @app.route("/")
 def landing_page():
     """landing page"""
-    return "Welcome to nscworklog" ""
+    landing_page = render_template("lp.html", title="Work Log")
+    return landing_page
 
 
 @app.route("/home")
