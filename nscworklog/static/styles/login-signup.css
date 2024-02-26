@@ -21,7 +21,7 @@ body {
 .wrapper {
 	width: 330px;
 	padding: 2rem 1rem;
-	margin: 130px auto;
+	margin: 50px auto;
 	border-radius: 10px;
 	text-align: center;
 	background-image: inherit;
@@ -67,19 +67,22 @@ input:focus {
 .member {
 	font-size: 0.9em;
 	margin-top: 0.5rem;
-	color: #000;
+	color: #fff;
+	
 }
 
 .member a {
 	color: #fff;
 	text-decoration: none;
 	font-size: 1em;
+	font-weight: bold;
 }
 
 .remember-me {
   display: inline-flex;
   align-items: center;
 	font-size: 0.9em;
+	color: #fff;
 }
 
 .remember-me-checkbox {
