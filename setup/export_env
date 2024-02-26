@@ -3,7 +3,7 @@
 # Usage: source setup/export_env
 
 ROOT_DIR=$(pwd)
-SRC_DIR="$ROOT_DIR/src"
+SRC_DIR="$ROOT_DIR/nscworklog"
 
 # Export PYTHONPATH variable to reflect root and src directories
 export PYTHONPATH="$ROOT_DIR:$SRC_DIR"
