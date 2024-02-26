@@ -1,0 +1,84 @@
+* {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  background-image: url('../images/lp.jpg');
+  background-size: cover;
+  background-position-y: 45%;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+header {
+  background-color: #000;
+  color: #fff;
+  border-radius: 3px;
+  height: 75px;
+}
+
+footer {
+  margin-top: auto;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-img {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 20%;
+  overflow: hidden;
+  background-color: white;
+}
+
+#work-log-logo {
+  width: 40px;
+  height: auto;
+  color: currentcolor;
+}
+
+.logo-header {
+  margin: 15px 10px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.right-nav {
+  list-style: none;
+}
+
+.right-nav li {
+  display: inline;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+.right-nav li a {
+  text-decoration: none;
+  color: #fff;
+}
