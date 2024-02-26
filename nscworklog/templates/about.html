@@ -1,22 +1,13 @@
-{% extends "base.html" %}
-{% block links %}
-<link rel="stylesheet" href="../static/styles/base.css">
-<link rel="stylesheet" href="../static/styles/lp.css">
-{% endblock %}
-
-{% block nav %}
-{% include "_nav-lp.html" %}
-{% endblock %}
+{% extends "lp.html" %}
 
 {% block content %}
 <main>
   <section class="description">
-    <h1>Welcome to nscworklog</h1>
+    <h1>About</h1>
     <p>We provide you with a streamlined solution for logging your work activities</p>
     <p>with detailed descriptions. Efficiently document your work in real-time</p>
     <p>as you complete them, or pre-log your tasks as you plan them.</p>
     <p>nscworklog, empowering your self-assessment through a factual review of your progress.</p>
-    <a href="{{ url_for('register') }}" class="login-button">Get Started</a>
   </section>
 </main>
 {% endblock %}

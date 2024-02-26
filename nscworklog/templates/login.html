@@ -1,50 +1,48 @@
-<!-- {% extends "base.html" %} -->
+{% extends "base.html" %}
 
-<!-- {% block content %} -->
+{% block title %}
+<title>Login</title>
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block links %}
+<link rel="stylesheet" href="../static/styles/login-signup.css">
+<link rel="stylesheet" href="../static/styles/base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="../static/styles/login-signup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-</head>
+{% block nav %}
+{% include "_nav-lp.html" %}
+{% endblock %}
 
-<body>
-    <div class="wrapper">
-        <h1>Login</h1>
-        <form method="POST" action="{{ url_for('login') }}">
-            {{ form.hidden_tag() }}
-            <div>
-                {{ form.username() }}
-                {% for error in form.username.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div>
-                {{ form.password() }}
-                {% for error in form.password.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div class="remember-me">
-                {{ form.remember_me.label }}
-                {{ form.remember_me(class="remember-me-checkbox") }}
-            </div>
-            <div>
-                {{ form.submit(class="button") }}
-            </div>
-        </form>
-        <div class="member">
-            Don't have an account? <a class="member" href="{{ url_for('register') }}">
-                Register Now
-            </a>
-        </div>
+{% block content %}
+<div class="wrapper">
+  <h1>Login</h1>
+  <form method="POST" action="{{ url_for('login') }}">
+    {{ form.hidden_tag() }}
+    <div>
+      {{ form.username() }}
+      {% for error in form.username.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
     </div>
-</body>
-
-</html>
-
-<!-- {% endblock %} -->
+    <div>
+      {{ form.password() }}
+      {% for error in form.password.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="remember-me">
+      {{ form.remember_me.label }}
+      {{ form.remember_me(class="remember-me-checkbox") }}
+    </div>
+    <div>
+      {{ form.submit(class="button") }}
+    </div>
+  </form>
+  <div class="member">
+    Don't have an account? <a class="member" href="{{ url_for('register') }}">
+      Register Now
+    </a>
+  </div>
+</div>
+{% endblock %}

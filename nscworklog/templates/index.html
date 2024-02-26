@@ -1,14 +1,101 @@
-{% extends "base.html" %}
-{% block title %}{{ title }}{% endblock %}
-{% block links %}
-  <link rel="stylesheet" href="styles/index.css" >
-  <script src="scripts/index.js" defer></script >
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-	{% if worklogs %}
-		{% for worklog in worklogs %}
-			<li>{{ worklog.title }}</li>
-		{% endfor %}
-	{% endif %}
-{% endblock %}
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+	<link rel="stylesheet" href="../static/styles/index.css">
+	<link rel="stylesheet" href="../static/styles/category.css">
+	<link rel="stylesheet" href="../static/styles/worklog.css">
+	<script src="scripts/index.js" defer></script>
+</head>
+
+<body>
+	<header>
+		<nav>
+			<div class="logo">
+				<a href="/" class="logo-header">nscworklog</a>
+			</div>
+			<ul class="right-nav">
+				<li><a href="#settings">Settings</a></li>
+				<li><a href="#profile">Profile</a></li>
+				<li><a href="#avatar">Avatar</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	{% block content %}
+	<!-- side panel wrapper start -->
+	<div class="wrapper">
+		<!-- main page left start -->
+		<div class="worklog-manager">
+			<!-- left bar start -->
+			<div class="left-bar">
+				<!-- left content start -->
+				<div class="left-content">
+					<div class="left-bar-item">
+						<input class="bar-item" name="item" type="radio" id="filter-worklogs" />
+						<img src="../static/svg/today.svg" alt="" class="sun-today">
+						<label class="filter" for="filter-worklogs">Worklogs</label>
+					</div>
+					<div class="left-bar-item">
+						<input class="bar-item" name="item" type="radio" id="filter-completed" />
+						<img src="../static/svg/completed.svg" alt="" class="tick-completed">
+						<label class="filter" for="filter-completed">Completed</label>
+					</div>
+					<div class="left-bar-item">
+						<input class="bar-item" name="item" type="radio" id="filter-all" />
+						<img src="../static/svg/all.svg" alt="" class="window-all">
+						<label class="filter" for="filter-all">All</label>
+					</div>
+				</div>
+				<!-- left content end -->
+			</div>
+			<!-- left bar end -->
+			{% block worklogs %}
+			<!-- page content start -->
+			<div class="page-content">
+				<div class="header">Worklogs</div>
+				<!-- content categories start -->
+				<div class="content-categories">
+					<div class="label-wrapper">
+						<input class="nav-item" name="nav" type="radio" id="opt-1" checked />
+						<label class="category" for="opt-1">Pending</label>
+					</div>
+					<div class="label-wrapper">
+						<input class="nav-item" name="nav" type="radio" id="opt-2" />
+						<label class="category" for="opt-2">Completed</label>
+					</div>
+				</div>
+				<!-- content categories end -->
+				<!-- tasks wrapper start -->
+				<div class="tasks-wrapper">
+					<div class="add-task" id="add-task-section">
+						<form class="new-task" method="POST" action="{{ url_for('add_worklog') }}">
+							{{ form.hidden_tag() }}
+							<div>
+								{{ form.add_worklog(class="plus-task") }}
+								{% for error in form.add_worklog.errors %}
+								<span style="color: red;">{{ error }}</span>
+								{% endfor %}
+							</div>
+						</form>
+					</div>
+					<ul id="task-list">
+						<!-- Task list will be dynamically populated here -->
+					</ul>
+				</div>
+				<!-- tasks wrapper end -->
+			</div>
+			<!-- page content end -->
+			{% endblock %}
+		</div>
+		<!-- main page left end -->
+	</div>
+	<!-- side panel wrapper end -->
+	{% endblock %}
+</body>
+
+</html>
