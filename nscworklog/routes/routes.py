@@ -7,29 +7,36 @@ from flask_login import login_required, login_user, logout_user
 from nscworklog import app
 from worklog.user import User
 from nscworklog import storage
-from forms import LoginForm, RegistrationForm, EditProfileForm
+from forms import LoginForm, RegistrationForm
+from forms import EditProfileForm, AddWorklogForm
 
 
 @app.route("/")
 def landing_page():
     """landing page"""
-    landing_page = render_template("lp.html", title="Work Log")
-    return landing_page
+    return render_template("lp.html", title="Welcome to nscworklog")
+
+
+@app.route("/about")
+def about_page():
+    """About page"""
+    return render_template("about.html", title="About")
 
 
 @app.route("/home")
 def index():
     """user homepage"""
-    print(current_user._id)
-    worklogs = storage.all("worklogs", current_user._id)
-    if worklogs:
-        worklogs = [work.to_dict() for work in worklogs]
+    # print(current_user._id)
+    # worklogs = storage.all("worklogs", current_user._id)
+    # if worklogs:
+    #     worklogs = [work.to_dict() for work in worklogs]
 
-        for worklog in worklogs:
-            for key in ["_id", "created_at", "updated_at", "user_id"]:
-                worklog.pop(key, None)
-
-    return jsonify(worklogs)
+    #     for worklog in worklogs:
+    #         for key in ["_id", "created_at", "updated_at", "user_id"]:
+    #             worklog.pop(key, None)
+    form = AddWorklogForm()
+    home_page = render_template("index.html", title="Home page", form=form)
+    return home_page
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -62,7 +69,6 @@ def login():
 def logout():
     """Logout route"""
     logout_user()
-
     return redirect(url_for("landing_page"))
 
 
@@ -119,6 +125,7 @@ def profile():
 
 
 @app.route("/worklogs")
+@login_required
 def worklogs():
     """All User worklogs route"""
     try:
@@ -135,8 +142,15 @@ def worklogs():
 
 
 @app.route("/worklogs/<worklog_id>")
+@login_required
 def worklog(worklog_id):
     """Gets a user's worklog"""
     worklog = storage.get("worklogs", worklog_id)
 
     return jsonify(worklog.safe_dict())
+
+@app.route("/add_worklog")
+@login_required
+def add_worklog():
+    """Add worklog"""
+    pass
