@@ -6,6 +6,7 @@ from flask_login import login_required, login_user, logout_user
 
 from nscworklog import app
 from worklog.user import User
+from worklog.worklog import Worklog
 from nscworklog import storage
 from forms import LoginForm, RegistrationForm
 from forms import EditProfileForm, AddWorklogForm
@@ -26,7 +27,6 @@ def about_page():
 @app.route("/home")
 def index():
     """user homepage"""
-    # print(current_user._id)
     # worklogs = storage.all("worklogs", current_user._id)
     # if worklogs:
     #     worklogs = [work.to_dict() for work in worklogs]
@@ -149,8 +149,8 @@ def worklog(worklog_id):
 
     return jsonify(worklog.safe_dict())
 
-@app.route("/add_worklog")
+@app.route("/worklogs")
 @login_required
 def add_worklog():
     """Add worklog"""
-    pass
+    
