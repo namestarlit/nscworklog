@@ -21,6 +21,24 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField("Remember_me")
     submit = SubmitField("Sign In")
 
+    def validate_username(self, username):
+        """checks validation of username & password."""
+
+        user = storage.get_user_by_filter("username", username.data)
+        if user is None :
+            raise ValidationError(
+                "Invalid username or password."
+            )
+
+    def validate_password(self, password):
+        """checks validation of username & password."""
+
+        user = storage.get_user_by_filter("username", username.data)
+        if not user.check_password(password.data):
+            raise ValidationError(
+                "Invalid username or password."
+            )
+
 
 class RegistrationForm(FlaskForm):
     """A RegistrationForm class definition."""
@@ -45,7 +63,8 @@ class RegistrationForm(FlaskForm):
 
     def validate_username(self, username):
         """checks validation of username."""
-        user = storage.get_user_by_filter("username", username)
+
+        user = storage.get_user_by_filter("username", username.data)
         if user is not None:
             raise ValidationError(
                 "Username taken, " "please choose a different username."
@@ -53,7 +72,7 @@ class RegistrationForm(FlaskForm):
 
     def validate_email(self, email):
         """checks validation of email."""
-        user = storage.get_user_by_filter("email", email)
+        user = storage.get_user_by_filter("email", email.data)
         if user is not None:
             raise ValidationError(
                 "Email address already exists, " "please use a different email address."
@@ -72,7 +91,7 @@ class EditProfileForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != self.original_username:
-            user = storage.get_user_by_filter("username", username)
+            user = storage.get_user_by_filter("username", username.data)
             if user is not None:
                 raise ValidationError(
                     "Username taken, " "please choose a different username."
