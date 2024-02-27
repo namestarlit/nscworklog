@@ -22,13 +22,13 @@
     <div>
       {{ form.username() }}
       {% for error in form.username.errors %}
-      <span style="color: red;">{{ error }}</span>
+      <span style="color: #fff;">{{ error }}</span>
       {% endfor %}
     </div>
     <div>
       {{ form.password() }}
       {% for error in form.password.errors %}
-      <span style="color: red;">{{ error }}</span>
+      <span style="color: #fff;">{{ error }}</span>
       {% endfor %}
     </div>
     <div class="remember-me">
