@@ -8,7 +8,7 @@ $(document).ready(function () {
     const form = $(this);
     const formData = form.serialize();
     $.post("/add_worklog", formData)
-      .done(function (response) {
+      .done(function (_) {
         // Fetch and update worklogs after adding a new one
         fetchAndUpdateWorklogs();
         // Clear form input after successful submission

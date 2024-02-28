@@ -40,3 +40,30 @@
 .worklogs:hover {
 	transform: translate(2px);
 }
+
+.worklog-info {
+	display: flex;
+	flex-flow: column;
+}
+
+/* Basic styles for the description list (DL) */
+dl {
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles for the term (DT) element */
+dt {
+  font-weight: bold;
+  margin: 0 0 0.5em 0; /* Top margin, no bottom margin */
+  display: inline-block; /* Allow text wrapping if term is long */
+  width: 120px; /* Optional: Set a fixed width for terms */
+  text-align: right; /* Optional: Right-align terms */
+}
+
+/* Styles for the definition (DD) element */
+dd {
+  margin: 0 0 1em 15px; /* Indent definitions */
+  padding: 0;
+}
+
