@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField
-from wtforms import BooleanField, SubmitField
+from wtforms import BooleanField, SubmitField, FormField, FieldList
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 from wtforms.validators import ValidationError
 
@@ -95,3 +95,16 @@ class AddWorklogForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "Add a worklog, press [ Enter ] to save"},
     )
+
+class ExtrasForm(FlaskForm):
+    key = StringField('Key')
+    value = StringField('Value')
+
+class WorklogForm(FlaskForm):
+    """Displays worklog details"""
+
+    title = StringField('Title')
+    description = TextAreaField('Description')
+    extras = FieldList(FormField(ExtrasForm), min_entries=1)
+
+    save = SubmitField('Save')

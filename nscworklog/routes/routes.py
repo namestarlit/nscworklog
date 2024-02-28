@@ -9,7 +9,7 @@ from nscworklog import storage
 from worklog.user import User
 from worklog.worklog import Worklog
 from forms import LoginForm, RegistrationForm
-from forms import EditProfileForm, AddWorklogForm
+from forms import EditProfileForm, WorklogForm
 
 
 @app.route("/")
@@ -168,3 +168,19 @@ def add_worklog():
             abort(500, "Internal Server Error")
 
     return jsonify([worklog])
+
+@app.route("/worklog_info", methods=["POST"])
+@login_required
+def worklog_info():
+    """Displays worklog info"""
+    form = WorklogForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        description = form.description.data
+        extras = form.extras.data # list of dictionaries
+
+        # Process the form data as needed, e.g., save to the database
+
+        # Redirect to a success page or do something else
+    return render_template('worklog-info.html', form=form)
