@@ -1,18 +1,20 @@
 $(document).ready(function () {
-  $(".worklogs").click(function() {
-    const worklog_id = $(this).attr("id");
-    $.getJSON("/worklog_info", )
-  });
-});
+  // Attach click event listener to delete buttons
+  $(".delete-btn").on("click", function () {
+    // Retrieve the worklog ID from the data attribute
+    const worklogId = $(this).closest(".worklog-info").data("worklog-id");
 
-document.getElementById('add-extras').addEventListener('click', function () {
-  var extrasDiv = document.getElementById('extras');
-  var newEntry = document.createElement('div');
-  newEntry.className = 'extras-entry';
-  newEntry.innerHTML = `
-      {{ form.extras.label }} 
-      <div>{{ form.extras[0].key(size=20) }}</div>
-      <div>{{ form.extras[0].value(size=20) }}</div>
-  `;
-  extrasDiv.appendChild(newEntry);
+    // Send an AJAX request to delete the worklog
+    $.ajax({
+      url: `/worklogs/${worklogId}`, // Replace with your actual delete endpoint
+      type: "DELETE"
+    })
+      .then(function (response) {
+        console.log("Success", response);
+        window.location.href = '/home';
+      })
+      .catch(function () {
+        console.log("Error", response);
+      })
+  });
 });
