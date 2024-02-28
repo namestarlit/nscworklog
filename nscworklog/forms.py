@@ -30,15 +30,6 @@ class LoginForm(FlaskForm):
                 "Invalid username or password."
             )
 
-    def validate_password(self, password):
-        """checks validation of username & password."""
-
-        user = storage.get_user_by_filter("username", username.data)
-        if not user.check_password(password.data):
-            raise ValidationError(
-                "Invalid username or password."
-            )
-
 
 class RegistrationForm(FlaskForm):
     """A RegistrationForm class definition."""
@@ -100,7 +91,7 @@ class EditProfileForm(FlaskForm):
 class AddWorklogForm(FlaskForm):
     """Adds a new worklog entry"""
 
-    add_worklog = StringField(
+    title = StringField(
         validators=[DataRequired()],
         render_kw={"placeholder": "Add a worklog, press [ Enter ] to save"},
     )
