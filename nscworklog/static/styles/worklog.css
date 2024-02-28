@@ -41,29 +41,56 @@
 	transform: translate(2px);
 }
 
+.worklogs a {
+	text-decoration: none;
+  color: inherit;
+}
+
 .worklog-info {
 	display: flex;
 	flex-flow: column;
+	width: 100%;
+	padding: 7px 10px;
+	border-radius: 10px;
 }
 
-/* Basic styles for the description list (DL) */
-dl {
+.worklog-info dl {
+  /* Styles for the dl element */
   margin: 0;
   padding: 0;
 }
 
-/* Styles for the term (DT) element */
-dt {
+.worklog-info dl dt {
+  /* Styles for the dt element */
   font-weight: bold;
-  margin: 0 0 0.5em 0; /* Top margin, no bottom margin */
-  display: inline-block; /* Allow text wrapping if term is long */
-  width: 120px; /* Optional: Set a fixed width for terms */
-  text-align: right; /* Optional: Right-align terms */
+  margin-top: 10px;
 }
 
-/* Styles for the definition (DD) element */
-dd {
-  margin: 0 0 1em 15px; /* Indent definitions */
-  padding: 0;
+.worklog-info dl dd {
+  /* Styles for the dd element */
+  margin-left: 0;
+  margin-bottom: 10px;
 }
 
+.button-container {
+	width: 100%;
+	text-align: center;
+	
+	padding: 10px 0;
+	bottom: 10;
+}
+
+.delete-btn {
+	float: left;
+	margin-left: 40px;
+	background-color: red;
+	color: #fff;
+	border-radius: 7px;
+}
+
+.edit-btn {
+	float: left;
+	background-color: #000;
+	color: #fff;
+	border-radius: 7px;
+}
