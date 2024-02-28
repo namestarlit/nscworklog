@@ -24,54 +24,6 @@ def about_page():
     return render_template("about.html", title="About")
 
 
-@app.route("/home")
-def index():
-    """user homepage"""
-    # worklogs = storage.all("worklogs", current_user._id)
-    # if worklogs:
-    #     worklogs = [work.to_dict() for work in worklogs]
-
-    #     for worklog in worklogs:
-    #         for key in ["_id", "created_at", "updated_at", "user_id"]:
-    #             worklog.pop(key, None)
-    form = AddWorklogForm()
-    home_page = render_template("index.html", title="Home page", form=form)
-    return home_page
-
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    """Login route"""
-    if current_user.is_authenticated:
-        return redirect(url_for("index"))
-
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = storage.get_user_by_filter("username", form.username.data)
-        if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
-            return redirect(url_for("login"))
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get("next")
-        if (
-            not next_page
-            or urlparse(next_url).scheme != ""
-            or urlparse(next_url).netloc != ""
-        ):
-            next_page = url_for("index")
-        return redirect(next_page)
-
-    login_page = render_template("login.html", title="Sign In", form=form)
-    return login_page
-
-
-@app.route("/logout")
-def logout():
-    """Logout route"""
-    logout_user()
-    return redirect(url_for("landing_page"))
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register route"""
@@ -101,6 +53,32 @@ def register():
     return register_page
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Login route"""
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = storage.get_user_by_filter("username", form.username.data)
+        if user is None or not user.check_password(form.password.data):
+            flash("Invalid username or password")
+            return redirect(url_for("login"))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get("next")
+        if (
+            not next_page
+            or urlparse(next_url).scheme != ""
+            or urlparse(next_url).netloc != ""
+        ):
+            next_page = url_for("index")
+        return redirect(next_page)
+
+    login_page = render_template("login.html", title="Sign In", form=form)
+    return login_page
+
+
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
@@ -122,6 +100,42 @@ def profile():
     profile_page = render_template("profile.html", title="Profile", form=form)
 
     return profile_page
+
+
+@app.route("/logout")
+def logout():
+    """Logout route"""
+    logout_user()
+    return redirect(url_for("landing_page"))
+
+
+@app.route("/home")
+def index():
+    """user homepage"""
+    form = AddWorklogForm()
+
+    return render_template("index.html", title="Home page", form=form)
+
+
+@app.route("/add_worklog", methods=["POST"])
+@login_required
+def add_worklog():
+    """Add worklog"""
+    # Access form data from request.form
+    title = request.form.get("title")
+
+    if title:
+        try:
+            worklog = Worklog(title, current_user._id)
+            worklog_id = storage.add(worklog)
+            worklog = storage.get("worklogs", worklog_id)
+            worklog = worklog.safe_dict()
+            for key in ["created_at", "description", "user_id"]:
+                worklog.pop(key, None)
+        except Exception as e:
+            abort(500, "Internal Server Error")
+
+    return jsonify([worklog])
 
 
 @app.route("/worklogs")
@@ -149,27 +163,8 @@ def worklog(worklog_id):
 
     return jsonify(worklog.safe_dict())
 
-@app.route("/add_worklog", methods=["POST"])
-@login_required
-def add_worklog():
-    """Add worklog"""
-    # Access form data from request.form
-    title = request.form.get("title")
 
-    if title:
-        try:
-            worklog = Worklog(title, current_user._id)
-            worklog_id = storage.add(worklog)
-            worklog = storage.get("worklogs", worklog_id)
-            worklog = worklog.safe_dict()
-            for key in ["created_at", "description", "user_id"]:
-                worklog.pop(key, None)
-        except Exception as e:
-            abort(500, "Internal Server Error")
-
-    return jsonify([worklog])
-
-@app.route("/worklog_info", methods=["POST"])
+@app.route("/worklog_info", methods=["GET", "POST"])
 @login_required
 def worklog_info():
     """Displays worklog info"""
@@ -183,4 +178,4 @@ def worklog_info():
         # Process the form data as needed, e.g., save to the database
 
         # Redirect to a success page or do something else
-    return render_template('worklog-info.html', form=form)
+    return render_template("worklog-info.html", title="Worklog Info", form=form)
