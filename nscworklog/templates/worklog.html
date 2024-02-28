@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block worklogs %}
+{% if worklog %}
+{% for key, value in worklog.items() %}
+<dl class="worklog-info">
+    {% if key == worklog.title %}
+    <dt>key</dt><br>
+    <dd>value</dd><br>
+    {% endif %}
+
+    {% if key == worklog.description %}
+    <dt>key</dt><br>
+    <dd>value</dd><br>
+    {% endif %}
+
+    {% if key == "extras" %}
+    {% for data in value %}
+    {% for k, v in data.items() %}
+    <dt>{{ k }}</dt><br>
+    <dd>{{ v }}</dd><br>
+    {% endfor %}
+    {% endfor %}
+    {% else %}
+    <dt>{{ key }}</dt><br>
+    <dd>{{ value }}</dd><br>
+    {% endif %}
+    
+    {% if key == worklog.status %}
+    <dt>key</dt><br>
+    <dd>value</dd><br>
+    {% endif %}
+  </dl>
+  {% endfor %}
+  {% endif %}
+{% endblock %}
