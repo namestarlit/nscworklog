@@ -155,19 +155,21 @@ def worklogs():
     return jsonify(worklogs)
 
 
-@app.route("/worklogs/<worklog_id>")
+@app.route("/worklogs/<worklog_id>", methods=["GET"])
 @login_required
-def worklog(worklog_id):
-    """Gets a user's worklog"""
+def get_worklog(worklog_id):
+    """Gets a specific worklog"""
     worklog = storage.get("worklogs", worklog_id)
+    worklog = worklog.safe_dict()
+    for key in ["_id", "user_id"]:
+        worklog.pop(key, None)
+    return render_template("worklog.html", worklog=worklog)
 
-    return jsonify(worklog.safe_dict())
 
-
-@app.route("/worklog_info", methods=["GET", "POST"])
+@app.route("/worklogs/<worklog_id>", methods=["POST"])
 @login_required
-def worklog_info():
-    """Displays worklog info"""
+def update_worklog(worklog_id):
+    """Updates worklog info"""
     form = WorklogForm()
 
     if form.validate_on_submit():
