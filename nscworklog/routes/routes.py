@@ -1,13 +1,13 @@
 from urllib.parse import urlparse
-from flask_login import current_user
 from flask import render_template, abort, jsonify
 from flask import flash, redirect, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_user, logout_user
+from flask_login import login_required, current_user
 
 from nscworklog import app
+from nscworklog import storage
 from worklog.user import User
 from worklog.worklog import Worklog
-from nscworklog import storage
 from forms import LoginForm, RegistrationForm
 from forms import EditProfileForm, AddWorklogForm
 
@@ -133,7 +133,7 @@ def worklogs():
         worklogs = [work.safe_dict() for work in worklogs]
 
         for worklog in worklogs:
-            for key in ["_id", "created_at", "updated_at", "user_id"]:
+            for key in ["created_at", "description", "user_id"]:
                 worklog.pop(key, None)
     except Exception as e:
         abort(500, "Internal Server Error")
@@ -149,8 +149,22 @@ def worklog(worklog_id):
 
     return jsonify(worklog.safe_dict())
 
-@app.route("/worklogs")
+@app.route("/add_worklog", methods=["POST"])
 @login_required
 def add_worklog():
     """Add worklog"""
-    
+    # Access form data from request.form
+    title = request.form.get("title")
+
+    if title:
+        try:
+            worklog = Worklog(title, current_user._id)
+            worklog_id = storage.add(worklog)
+            worklog = storage.get("worklogs", worklog_id)
+            worklog = worklog.safe_dict()
+            for key in ["created_at", "description", "user_id"]:
+                worklog.pop(key, None)
+        except Exception as e:
+            abort(500, "Internal Server Error")
+
+    return jsonify([worklog])
