@@ -12,7 +12,7 @@ login = LoginManager(app)
 login.login_view = "login"
 
 # Initialize storage object
-from worklog import storage
+from worklog import dbstorage as storage
 
 
 # Load user into flask session
