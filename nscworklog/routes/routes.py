@@ -15,7 +15,7 @@ from forms import EditProfileForm, WorklogForm, AddWorklogForm
 @app.route("/")
 def landing_page():
     """landing page"""
-    return render_template("lp.html", title="Welcome to nscworklog")
+    return render_template("lp.html")
 
 
 @app.route("/about")
@@ -114,7 +114,7 @@ def index():
     """user homepage"""
     form = AddWorklogForm()
 
-    return render_template("index.html", title="Home page", form=form)
+    return render_template("index.html", title="Home", form=form)
 
 
 @app.route("/add_worklog", methods=["POST"])
@@ -161,14 +161,14 @@ def get_worklog(worklog_id):
     """Gets a specific worklog"""
     worklog = storage.get("worklogs", worklog_id)
     worklog = worklog.safe_dict()
-    for key in ["_id", "user_id"]:
+    for key in ["user_id"]:
         worklog.pop(key, None)
     return render_template("worklog.html", worklog=worklog)
 
 
 @app.route("/worklogs/<worklog_id>", methods=["POST"])
 @login_required
-def update_worklog(worklog_id):
+def update_worklog(dict):
     """Updates worklog info"""
     form = WorklogForm()
 
@@ -181,3 +181,17 @@ def update_worklog(worklog_id):
 
         # Redirect to a success page or do something else
     return render_template("worklog-info.html", title="Worklog Info", form=form)
+
+
+@app.route("/worklogs/<worklog_id>", methods=["DELETE"])
+@login_required
+def delete_worklog(worklog_id):
+    """Delete a worklog"""
+    worklog = storage.get("worklogs", worklog_id)
+    
+    try:
+        storage.delete("worklogs", worklog._id)
+    except Exception as e:
+        abort(500, "Internal Server Error")
+    
+    return jsonify({})
