@@ -2,44 +2,51 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Worklog</title>
-    <!-- Include Bootstrap CSS if desired -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worklog Info</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" defer></script>
 </head>
+
 <body>
-    <h1>Create Worklog</h1>
+  <h1>{{ form.title(class="form-control") }}</h1>
 
-    <form method="POST" action="{{ url_for('worklog_info') }}">
-        {{ form.csrf_token }}
-        
-        <!-- Title Field -->
-        <div class="form-group">
-            {{ render_form(form.title, class="form-control", placeholder="Enter Title") }}
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <!-- Description Field -->
+    <div class="form-group">
+      {{ form.description.label }}
+      {{ form.description(rows=5, class="form-control") }}
+      <div class="form-text text-danger">{{ form.description.errors }}</div>
+    </div>
+
+    <!-- Extras Field -->
+    <div class="form-group">
+      <label>Extras:</label>
+      <div class="extras-container">
+        {% for extra_form in form.extras %}
+        <div class="extra">
+          {{ extra_form.key.label }}
+          {{ extra_form.key(size=20, class="form-control me-2") }}
+          {{ extra_form.value.label }}
+          {{ extra_form.value(size=30, class="form-control") }}
+          <div class="form-text text-danger">
+            {{ extra_form.key.errors }}
+            {{ extra_form.value.errors }}
+          </div>
         </div>
+        {% endfor %}
+      </div>
+      <button type="button" id="add-extra" class="btn btn-primary">Add Extra</button>
+    </div>
 
-        <!-- Description Field -->
-        <div class="form-group">
-            {{ render_form(form.description, class="form-control", placeholder="Enter Description") }}
-        </div>
-
-        <!-- Extras Field -->
-        <div class="form-group">
-            <label>Extras:</label>
-            <div class="extras-container">
-                {% for extra in form.extras %}
-                    <div class="extra">
-                        {{ render_form(extra.key, class="form-control", placeholder="Enter Key") }}
-                        {{ render_form(extra.value, class="form-control", placeholder="Enter Value") }}
-                    </div>
-                {% endfor %}
-            </div>
-            <button type="button" id="add-extra" class="btn btn-primary">Add Extra</button>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <!-- Submit Button -->
+    <div>
+      {{ form.save() }}
+  </div>
 </body>
+
 </html>
