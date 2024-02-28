@@ -9,7 +9,7 @@ from nscworklog import storage
 from worklog.user import User
 from worklog.worklog import Worklog
 from forms import LoginForm, RegistrationForm
-from forms import EditProfileForm, WorklogForm
+from forms import EditProfileForm, WorklogForm, AddWorklogForm
 
 
 @app.route("/")
