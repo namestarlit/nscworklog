@@ -2,17 +2,14 @@
 
 {% block worklogs %}
 {% if worklog %}
-{% for key, value in worklog.items() %}
-<dl class="worklog-info">
-    {% if key == worklog.title %}
-    <dt>{{ key }}</dt>
-    <dd>{{ value }}</dd>
-    {% endif %}
-
-    {% if key == worklog.description %}
-    <dt>{{ key }}</dt>
-    <dd>{{ value }}</dd>
-    {% endif %}
+<div class="worklog-info" data-worklog-id="{{ worklog._id }}">
+  <dl>
+    <dt>Title</dt>
+    <dd>{{ worklog.title }}</dd>
+    <dt>Description</dt>
+    <dd>{{ worklog.description }}</dd>
+    {% for key, value in worklog.items() %}
+    {% if key not in ["_id", "title", "description", "status", "created_at", "updated_at"] %}
 
     {% if key == "extras" %}
     {% for data in value %}
@@ -21,16 +18,21 @@
     <dd>{{ v }}</dd>
     {% endfor %}
     {% endfor %}
+
     {% else %}
     <dt>{{ key }}</dt>
     <dd>{{ value }}</dd>
     {% endif %}
-    
-    {% if key == worklog.status %}
-    <dt>{{ key }}</dt>
-    <dd>{{ value }}</dd>
     {% endif %}
+    {% endfor %}
+
+    <dt>Status</dt>
+    <dd>{{ worklog.status }}</dd>
   </dl>
-  {% endfor %}
-  {% endif %}
+  <div class="button-container">
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
