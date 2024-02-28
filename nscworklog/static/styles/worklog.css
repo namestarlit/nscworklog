@@ -1,28 +1,42 @@
-.tasks-wrapper {
+.worklogs-wrapper {
 	padding: 15px 0;
 	flex: 1;
 	overflow-y: auto;
 	height: 100%;
   padding-left: 10px;
 	padding-right: 30px;
+	margin-bottom: 0;
 }
 
-.add-task {
-	display: flex;
-	margin-bottom: 10px;
+.add-worklog {
+	margin-bottom: -13px;
 }
 
-.add-task .new-task {
+.add-worklog .new-worklog {
 	flex: 0 1 100%;
 }
 
-.plus-task {
-	display: block;
+.plus-worklog {
 	width: 100%;
-	outline: none;
 	border: 1px solid #000;
 	padding: 7px 10px;
 	border-radius: 10px;
 	padding-left: 10px;
-	background: #fff;
+}
+
+.worklogs-list {
+	list-style-type: none;
+}
+
+.worklogs {
+	width: 100%;
+	margin-bottom: -1px;
+	padding: 7px 10px;
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding-left: 10px;
+}
+
+.worklogs:hover {
+	transform: translate(2px);
 }

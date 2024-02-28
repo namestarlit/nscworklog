@@ -9,7 +9,8 @@
 	<link rel="stylesheet" href="../static/styles/index.css">
 	<link rel="stylesheet" href="../static/styles/category.css">
 	<link rel="stylesheet" href="../static/styles/worklog.css">
-	<script src="scripts/index.js" defer></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+	<script src="../static/scripts/worklogs.js" defer></script>
 </head>
 
 <body>
@@ -71,20 +72,17 @@
 				</div>
 				<!-- content categories end -->
 				<!-- tasks wrapper start -->
-				<div class="tasks-wrapper">
-					<div class="add-task" id="add-task-section">
-						<form class="new-task" method="POST" action="{{ url_for('add_worklog') }}">
+				<div class="worklogs-wrapper">
+					<div class="add-worklog" id="add-worklog-section">
+						<form class="new-worklog">
 							{{ form.hidden_tag() }}
 							<div>
-								{{ form.add_worklog(class="plus-task") }}
-								{% for error in form.add_worklog.errors %}
-								<span style="color: red;">{{ error }}</span>
-								{% endfor %}
+								{{ form.title(class="plus-worklog") }}
 							</div>
 						</form>
 					</div>
-					<ul id="task-list">
-						<!-- Task list will be dynamically populated here -->
+					<ul id="worklogs-list">
+						<!-- Worklogs will be dynamically populated here -->
 					</ul>
 				</div>
 				<!-- tasks wrapper end -->
