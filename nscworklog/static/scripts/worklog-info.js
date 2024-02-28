@@ -1,3 +1,10 @@
+$(document).ready(function () {
+  $(".worklogs").click(function() {
+    const worklog_id = $(this).attr("id");
+    $.getJSON("/worklog_info", )
+  });
+});
+
 document.getElementById('add-extras').addEventListener('click', function () {
   var extrasDiv = document.getElementById('extras');
   var newEntry = document.createElement('div');

@@ -5,30 +5,30 @@
 {% for key, value in worklog.items() %}
 <dl class="worklog-info">
     {% if key == worklog.title %}
-    <dt>key</dt><br>
-    <dd>value</dd><br>
+    <dt>key</dt>
+    <dd>value</dd>
     {% endif %}
 
     {% if key == worklog.description %}
-    <dt>key</dt><br>
-    <dd>value</dd><br>
+    <dt>key</dt>
+    <dd>value</dd>
     {% endif %}
 
     {% if key == "extras" %}
     {% for data in value %}
     {% for k, v in data.items() %}
-    <dt>{{ k }}</dt><br>
-    <dd>{{ v }}</dd><br>
+    <dt>{{ k }}</dt>
+    <dd>{{ v }}</dd>
     {% endfor %}
     {% endfor %}
     {% else %}
-    <dt>{{ key }}</dt><br>
-    <dd>{{ value }}</dd><br>
+    <dt>{{ key }}</dt>
+    <dd>{{ value }}</dd>
     {% endif %}
     
     {% if key == worklog.status %}
-    <dt>key</dt><br>
-    <dd>value</dd><br>
+    <dt>key</dt>
+    <dd>value</dd>
     {% endif %}
   </dl>
   {% endfor %}
