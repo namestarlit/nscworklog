@@ -2,7 +2,7 @@ $(document).ready(function () {
   // Function to load HTML templates into the worklogs block section
   function loadWorklogsTemplate(templateName) {
     $.ajax({
-      url: templateName,
+      url: "../templates/" + templateName,
       dataType: "html",
       success: function (data) {
         $(".worklogs").html(data); // Load the HTML template into the worklogs block section

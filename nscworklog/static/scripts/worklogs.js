@@ -21,8 +21,27 @@ $(document).ready(function () {
       });
   });
 
+  // Handle input change event for loading different templates
+  $("input[name='item']").change(function () {
+    const selectedId = $(this).attr("id");
+    let selectedNav;
+
+    if (selectedId === "filter-completed") {
+      $(".add-worklog").hide(); // Hide the form section for completed worklogs
+      selectedNav = "completed";
+    } else if (selectedId === "filter-all") {
+      $(".add-worklog").hide(); // Hide the form section for all worklogs
+      selectedNav = "all";
+    } else {
+      $(".add-worklog").show(); // Show the form section for pending worklogs
+      selectedNav = "pending";
+    }
+    // Fetch and update worklogs based on the selected input tag
+    fetchAndUpdateWorklogs(selectedNav);
+  });
+
   // Handle input change event for displaying/hiding the form section
-  $(".content-categories input[name='nav']").change(function() {
+  $(".content-categories input[name='nav']").change(function () {
     const selectedNav = $(this).attr("id");
     if (selectedNav === "completed") {
       $(".add-worklog").hide(); // Hide the form section for completed worklogs
@@ -54,6 +73,9 @@ function fetchAndUpdateWorklogs(nav = "pending") {
     if (nav === "completed") {
       // Filter completed worklogs
       filteredData = filterCompleted(data);
+    } else if (nav === "all") {
+      // Return all worklogs
+      filteredData = noFilter(data);
     } else {
       // Filter pending worklogs
       filteredData = filterPending(data);
@@ -77,6 +99,11 @@ function filterCompleted(data) {
   return data.filter(function (item) {
     return item.status === "completed";
   });
+}
+
+// Function to include all items without filtering
+function noFilter(data) {
+  return data;
 }
 
 // Sort the data based on the "updated_at" field in descending order
