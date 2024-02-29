@@ -27,13 +27,19 @@ $(document).ready(function () {
     let selectedNav;
 
     if (selectedId === "filter-completed") {
-      $(".add-worklog").hide(); // Hide the form section for completed worklogs
+      $(".header").text("Completed Worklogs"); // Change header
+      $(".content-categories").hide(); // Hide categories section
+      $(".add-worklog").hide(); // Hide form section
       selectedNav = "completed";
     } else if (selectedId === "filter-all") {
-      $(".add-worklog").hide(); // Hide the form section for all worklogs
+      $(".header").text("All Worklogs"); // Change header
+      $(".content-categories").hide(); // Hide categories section
+      $(".add-worklog").hide(); // Hide form section
       selectedNav = "all";
     } else {
-      $(".add-worklog").show(); // Show the form section for pending worklogs
+      $(".header").text("Worklogs"); // Change header
+      $(".content-categories").show(); // Show categories section
+      $(".add-worklog").show(); // Show form section
       selectedNav = "pending";
     }
     // Fetch and update worklogs based on the selected input tag
@@ -44,9 +50,9 @@ $(document).ready(function () {
   $(".content-categories input[name='nav']").change(function () {
     const selectedNav = $(this).attr("id");
     if (selectedNav === "completed") {
-      $(".add-worklog").hide(); // Hide the form section for completed worklogs
+      $(".add-worklog").hide(); // Hide form section
     } else {
-      $(".add-worklog").show(); // Show the form section for pending worklogs
+      $(".add-worklog").show(); // Show form section
     }
     // Fetch and update worklogs based on the selected input tag
     fetchAndUpdateWorklogs(selectedNav);
