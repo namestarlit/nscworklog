@@ -20,6 +20,18 @@ $(document).ready(function () {
         }
       });
   });
+
+  // Handle input change event for displaying/hiding the form section
+  $(".content-categories input[name='nav']").change(function() {
+    const selectedNav = $(this).attr("id");
+    if (selectedNav === "completed") {
+      $(".add-worklog").hide(); // Hide the form section for completed worklogs
+    } else {
+      $(".add-worklog").show(); // Show the form section for pending worklogs
+    }
+    // Fetch and update worklogs based on the selected input tag
+    fetchAndUpdateWorklogs(selectedNav);
+  });
 });
 
 // Function to update worklogs dynamically
@@ -36,10 +48,16 @@ function updateWorklogs(data) {
 }
 
 // Function to fetch and update worklogs
-function fetchAndUpdateWorklogs() {
+function fetchAndUpdateWorklogs(nav = "pending") {
   $.getJSON("/worklogs", function (data) {
-    // Filter pending worklogs
-    const filteredData = filterPending(data);
+    let filteredData;
+    if (nav === "completed") {
+      // Filter completed worklogs
+      filteredData = filterCompleted(data);
+    } else {
+      // Filter pending worklogs
+      filteredData = filterPending(data);
+    }
     // Sort filtered data
     sortUpdated(filteredData);
     // Update worklogs list with filtered and sorted data
