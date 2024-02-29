@@ -6,9 +6,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ title }} - nscworklog</title>
+
+	{% block links %}
 	<link rel="stylesheet" href="../static/styles/index.css">
 	<link rel="stylesheet" href="../static/styles/category.css">
 	<link rel="stylesheet" href="../static/styles/worklog.css">
+	{% endblock %}
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="../static/scripts/worklogs.js" defer></script>
 	<script src="../static/scripts/worklog-info.js" defer></script>
@@ -50,38 +54,7 @@
 			</div>
 			<!-- left bar end -->
 			{% block worklogs %}
-			<!-- page content start -->
-			<div class="page-content">
-				<div class="header">Worklogs</div>
-				<!-- content categories start -->
-				<div class="content-categories">
-					<div class="label-wrapper">
-						<input class="nav-item" name="nav" type="radio" id="opt-1" checked />
-						<label class="category" for="opt-1">Pending</label>
-					</div>
-					<div class="label-wrapper">
-						<input class="nav-item" name="nav" type="radio" id="opt-2" />
-						<label class="category" for="opt-2">Completed</label>
-					</div>
-				</div>
-				<!-- content categories end -->
-				<!-- tasks wrapper start -->
-				<div class="worklogs-wrapper">
-					<div class="add-worklog" id="add-worklog-section">
-						<form class="new-worklog">
-							{{ form.hidden_tag() }}
-							<div>
-								{{ form.title(class="plus-worklog") }}
-							</div>
-						</form>
-					</div>
-					<ul id="worklogs-list">
-						<!-- Worklogs will be dynamically populated here -->
-					</ul>
-				</div>
-				<!-- tasks wrapper end -->
-			</div>
-			<!-- page content end -->
+			{% include "pending-worklogs.html" %}
 			{% endblock %}
 		</div>
 		<!-- main page left end -->

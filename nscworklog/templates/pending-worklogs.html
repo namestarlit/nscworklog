@@ -1,0 +1,34 @@
+{% block worklogs %}
+<!-- page content start -->
+<div class="page-content">
+  <div class="header">Worklogs</div>
+  <!-- content categories start -->
+  <div class="content-categories">
+    <div class="label-wrapper">
+      <input class="nav-item" name="nav" type="radio" id="pending" checked />
+      <label class="category" for="pending">Pending</label>
+    </div>
+    <div class="label-wrapper">
+      <input class="nav-item" name="nav" type="radio" id="completed" />
+      <label class="category" for="completed">Completed</label>
+    </div>
+  </div>
+  <!-- content categories end -->
+  <!-- tasks wrapper start -->
+  <div class="worklogs-wrapper">
+    <div class="add-worklog" id="add-worklog-section">
+      <form class="new-worklog">
+        {{ form.hidden_tag() }}
+        <div>
+          {{ form.title(class="plus-worklog") }}
+        </div>
+      </form>
+    </div>
+    <ul id="worklogs-list">
+      <!-- Worklogs will be dynamically populated here -->
+    </ul>
+  </div>
+  <!-- tasks wrapper end -->
+</div>
+<!-- page content end -->
+{% endblock %}
