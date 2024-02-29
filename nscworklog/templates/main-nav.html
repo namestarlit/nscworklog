@@ -3,8 +3,10 @@
     <a href="/home" class="logo-header">nscworklog</a>
   </div>
   <ul class="right-nav">
-    <li><a href="#settings">Settings</a></li>
-    <li><a href="#profile">Profile</a></li>
-    <li><a href="#avatar">Avatar</a></li>
+    {% if current_user.is_anonymous %}
+      <li> <a href="{{ url_for('login') }}">Login</a></li>
+    {% else %}
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    {% endif %}
   </ul>
 </nav>

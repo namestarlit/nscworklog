@@ -4,6 +4,7 @@ import re
 import bcrypt
 import string
 import secrets
+from hashlib import md5
 from nscworklog import login
 from flask_login import UserMixin
 
