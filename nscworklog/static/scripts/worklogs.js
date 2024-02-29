@@ -7,7 +7,7 @@ $(document).ready(function () {
     e.preventDefault();
     const form = $(this);
     const formData = form.serialize();
-    $.post("/add_worklog", formData)
+    $.post("/worklogs", formData)
       .done(function (_) {
         // Fetch and update worklogs after adding a new one
         fetchAndUpdateWorklogs();

@@ -117,7 +117,7 @@ def index():
     return render_template("index.html", title="Home", form=form)
 
 
-@app.route("/add_worklog", methods=["POST"])
+@app.route("/worklogs", methods=["POST"])
 @login_required
 def add_worklog():
     """Add worklog"""
