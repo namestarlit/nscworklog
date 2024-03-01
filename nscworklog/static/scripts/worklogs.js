@@ -66,7 +66,8 @@ function updateWorklogs(data) {
   workLogList.empty();
   $.each(data, function (_, item) {
     const listItem = $("<li class='worklogs'></li>");
-    const link = $("<a></a>").attr("href", "worklogs/" + item._id).text(item.title);
+    // const link = $("<a></a>").attr("href", "worklogs/" + item._id).text(item.title);
+    listItem.attr("data-worklog-id") = item._id
     listItem.append(link);
     workLogList.append(listItem);
   });

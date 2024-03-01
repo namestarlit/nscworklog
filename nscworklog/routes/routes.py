@@ -69,8 +69,8 @@ def login():
         next_page = request.args.get("next")
         if (
             not next_page
-            or urlparse(next_url).scheme != ""
-            or urlparse(next_url).netloc != ""
+            or urlparse(next_page).scheme != ""
+            or urlparse(next_page).netloc != ""
         ):
             next_page = url_for("index")
         return redirect(next_page)
@@ -135,7 +135,7 @@ def add_worklog():
         except Exception as e:
             abort(500, "Internal Server Error")
 
-    return jsonify([worklog])
+    return jsonify(worklog)
 
 
 @app.route("/worklogs")
@@ -161,9 +161,21 @@ def get_worklog(worklog_id):
     """Gets a specific worklog"""
     worklog = storage.get("worklogs", worklog_id)
     worklog = worklog.safe_dict()
-    for key in ["user_id"]:
-        worklog.pop(key, None)
-    return render_template("worklog.html", worklog=worklog)
+    worklog.pop("user_id", None)
+    
+    return render_template("worklog.html", title="worklogs", worklog=worklog)
+
+
+@app.route('/worklogs/<worklog_id>/edit', methods=['GET'])
+def edit_worklog(worklog_id):
+    # Retrieve worklog data based on worklog_id (this is just an example)
+    worklog = storage.get("worklogs", worklog_id)
+    worklog = worklog.safe_dict()
+    worklog.pop("user_id", None)
+
+    # Render the HTML template with the worklog data
+    return render_template('edit_worklog.html', worklog=worklog)
+
 
 
 @app.route("/worklogs/<worklog_id>", methods=["POST"])
