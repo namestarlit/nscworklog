@@ -165,7 +165,6 @@ def get_worklog(worklog_id):
     
     return jsonify(worklog)
 
-
 @app.route('/worklogs/<worklog_id>/edit', methods=['GET'])
 def edit_worklog(worklog_id):
     # Retrieve worklog data based on worklog_id (this is just an example)
@@ -182,18 +181,34 @@ def edit_worklog(worklog_id):
 @login_required
 def update_worklog(dict):
     """Updates worklog info"""
-    form = WorklogForm()
+    worklog = storage.get("worklogs", worklog_id)
 
-    if form.validate_on_submit():
-        title = form.title.data
-        description = form.description.data
-        extras = form.extras.data # list of dictionaries
+    if not worklog:
+        abort(404, "Worklog not found")
 
-        # Process the form data as needed, e.g., save to the database
+    form_data = request.form
 
-        # Redirect to a success page or do something else
-    return render_template("worklog-info.html", title="Worklog Info", form=form)
+    worklog.title = form_data.get("title")
+    worklog.description = form_data.get("description")
 
+    # Process extras, assuming extras is a list of dictionaries
+    new_extras = []
+    for key, value in form_data.items():
+        if key.startswith("extra_"):
+            extra_key = key.replace("extra_", "")
+            new_extras.append({extra_key: value})
+
+    worklog.extras = new_extras
+
+    storage.update(worklog_id, worklog)
+
+    updated_worklog = {
+        "title": worklog.title,
+        "description": worklog.description,
+        "extras": worklog.extras
+    }
+
+    return jsonify(updated_worklog)
 
 @app.route("/worklogs/<worklog_id>", methods=["DELETE"])
 @login_required

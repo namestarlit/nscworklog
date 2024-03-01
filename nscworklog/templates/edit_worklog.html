@@ -1,0 +1,21 @@
+<!-- Edit Form Template -->
+<script id="edit-form-template" type="text/template">
+  <form id="edit-worklog-form" method="POST">
+    <!-- Add form fields dynamically based on your worklog structure -->
+    <label for="title">Title</label>
+    <input type="text" name="title" value="{{ worklog.title }}">
+    
+    <label for="description">Description</label>
+    <textarea name="description">{{ worklog.description }}</textarea>
+
+    <!-- Traverse the worklogs.extras list and repopulate the extras fields -->
+    {% for extra in worklog.extras %}
+      {% for key, value in extra.items() %}
+        <label for="{{ key }}">{{ key }}</label>
+        <input type="text" name="{{ key }}" value="{{ value }}">
+      {% endfor %}
+    {% endfor %}
+
+    <button type="submit">Save</button>
+  </form>
+</script>

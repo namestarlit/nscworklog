@@ -1,38 +1,12 @@
-{% extends "index.html" %}
-
-{% block worklogs %}
-{% if worklog %}
-<div class="worklog-info" data-worklog-id="{{ worklog._id }}">
-  <dl>
-    <dt>Title</dt>
-    <dd>{{ worklog.title }}</dd>
-    <dt>Description</dt>
-    <dd>{{ worklog.description }}</dd>
-    {% for key, value in worklog.items() %}
-    {% if key not in ["_id", "title", "description", "status", "created_at", "updated_at"] %}
-
-    {% if key == "extras" %}
-    {% for data in value %}
-    {% for k, v in data.items() %}
-    <dt>{{ k }}</dt>
-    <dd>{{ v }}</dd>
-    {% endfor %}
-    {% endfor %}
-
-    {% else %}
-    <dt>{{ key }}</dt>
-    <dd>{{ value }}</dd>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-
-    <dt>Status</dt>
-    <dd>{{ worklog.status }}</dd>
-  </dl>
-  <div class="button-container">
-    <button class="edit-btn">Edit</button>
-    <button class="delete-btn">Delete</button>
-  </div>
+<div class="worklog-info" style="display: none;">
+    <dl>
+        <!-- Display worklog details here -->
+    </dl>
+    <div class="button-container">
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
+    </div>
 </div>
-{% endif %}
-{% endblock %}
+
+<!-- Edit form will be inserted here dynamically -->
+<div class="edit-form-container" style="display: none;"></div>
