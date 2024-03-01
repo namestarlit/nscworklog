@@ -1,52 +1,12 @@
-<!-- create_worklog.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Worklog Info</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
-</head>
-
-<body>
-  <h1>{{ form.title(class="form-control") }}</h1>
-
-  <form method="POST">
-    {{ form.hidden_tag() }}
-
-    <!-- Description Field -->
-    <div class="form-group">
-      {{ form.description.label }}
-      {{ form.description(rows=5, class="form-control") }}
-      <div class="form-text text-danger">{{ form.description.errors }}</div>
+<div class="worklog-info" data-worklog-id="{{ worklog._id }}">
+    <dl>
+        <!-- Display worklog details here -->
+    </dl>
+    <div class="button-container">
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
     </div>
+</div>
 
-    <!-- Extras Field -->
-    <div class="form-group">
-      <label>Extras:</label>
-      <div class="extras-container">
-        {% for extra_form in form.extras %}
-        <div class="extra">
-          {{ extra_form.key.label }}
-          {{ extra_form.key(size=20, class="form-control me-2") }}
-          {{ extra_form.value.label }}
-          {{ extra_form.value(size=30, class="form-control") }}
-          <div class="form-text text-danger">
-            {{ extra_form.key.errors }}
-            {{ extra_form.value.errors }}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <button type="button" id="add-extra" class="btn btn-primary">Add Extra</button>
-    </div>
-
-    <!-- Submit Button -->
-    <div>
-      {{ form.save() }}
-  </div>
-</body>
-
-</html>
+<!-- Edit form will be inserted here dynamically -->
+<div class="edit-form-container" style="display: none;"></div>

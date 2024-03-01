@@ -163,7 +163,7 @@ def get_worklog(worklog_id):
     worklog = worklog.safe_dict()
     worklog.pop("user_id", None)
     
-    return render_template("worklog.html", title="worklogs", worklog=worklog)
+    return jsonify(worklog)
 
 
 @app.route('/worklogs/<worklog_id>/edit', methods=['GET'])

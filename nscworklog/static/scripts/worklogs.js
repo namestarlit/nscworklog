@@ -57,6 +57,24 @@ $(document).ready(function () {
     // Fetch and update worklogs based on the selected input tag
     fetchAndUpdateWorklogs(selectedNav);
   });
+
+  // Attach click event listener for worklogs
+  $(".worklogs").on("click", function () {
+    const worklogId = $(this).closest(".worklogs").data("worklog-id");
+
+    // Make an Ajax request to get the worklog details
+    $.ajax({
+      url: `/worklogs/${worklogId}`,
+      method: "GET",
+      success: function (worklog) {
+        // Load worklog info html content
+        $('.page-content').load("worklog-info.html");
+      },
+      error: function (error) {
+        console.error("Error fetching worklog:", error);
+      }
+    });
+  });
 });
 
 // Function to update worklogs dynamically
@@ -66,9 +84,8 @@ function updateWorklogs(data) {
   workLogList.empty();
   $.each(data, function (_, item) {
     const listItem = $("<li class='worklogs'></li>");
-    // const link = $("<a></a>").attr("href", "worklogs/" + item._id).text(item.title);
-    listItem.attr("data-worklog-id") = item._id
-    listItem.append(link);
+    listItem.attr("data-worklog-id", item._id);
+    listItem.text(item.title);
     workLogList.append(listItem);
   });
 }
