@@ -179,7 +179,7 @@ def edit_worklog(worklog_id):
 
 @app.route("/worklogs/<worklog_id>", methods=["POST"])
 @login_required
-def update_worklog(dict):
+def update_worklog(worklog_id):
     """Updates worklog info"""
     worklog = storage.get("worklogs", worklog_id)
 
@@ -200,7 +200,7 @@ def update_worklog(dict):
 
     worklog.extras = new_extras
 
-    storage.update(worklog_id, worklog)
+    storage.update(worklog._id, worklog)
 
     updated_worklog = {
         "title": worklog.title,

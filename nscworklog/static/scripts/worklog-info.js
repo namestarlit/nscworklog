@@ -53,14 +53,17 @@ $(document).ready(function () {
   }
 
   // Attach click event listener to edit button
-  $(".edit-btn").on("click", function () {
+  $(".worklog-info").on("click", ".edit-btn", function () {
     // Make an Ajax request to get the worklog details
     $.ajax({
       url: `/worklogs/${worklogId}/edit`, // Replace with your actual edit endpoint
       method: "GET",
       success: function (editFormHtml) {
-        $(".edit-form-container").html(editFormHtml).slideDown();
-        $(".worklog-info").fadeOut();
+        console.log(editFormHtml);
+        $(".edit-form-container").html(editFormHtml);
+        console.log($(".edit-form-container").html());  // Log the content
+        $(".edit-form-container").show();
+        $(".worklog-info").hide();
       },
       error: function (error) {
         console.error("Error fetching edit form:", error);
