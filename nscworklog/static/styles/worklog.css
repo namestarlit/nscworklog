@@ -39,6 +39,7 @@
 
 .worklogs:hover {
 	transform: translate(2px);
+	cursor: pointer;
 }
 
 .worklogs a {
@@ -86,6 +87,7 @@
 	background-color: red;
 	color: #fff;
 	border-radius: 7px;
+	cursor: pointer;
 }
 
 .edit-btn {
@@ -93,4 +95,5 @@
 	background-color: #000;
 	color: #fff;
 	border-radius: 7px;
+	cursor: pointer;
 }
