@@ -191,12 +191,11 @@ def update_worklog(worklog_id):
     worklog.title = form_data.get("title")
     worklog.description = form_data.get("description")
 
-    # Process extras, assuming extras is a list of dictionaries
-    new_extras = []
+    # Process extras, assuming extras is a dictionary
+    new_extras = {}
     for key, value in form_data.items():
-        if key.startswith("extra_"):
-            extra_key = key.replace("extra_", "")
-            new_extras.append({extra_key: value})
+        if key not in ["title", "description", "status"]:
+            new_extras[key] = value
 
     worklog.extras = new_extras
 
