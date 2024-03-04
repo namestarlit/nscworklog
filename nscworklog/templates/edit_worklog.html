@@ -9,10 +9,12 @@
     <textarea name="description" class="auto-size">{{ worklog.description }}</textarea>
 
     <!-- Traverse the worklogs.extras dict and repopulate the extras fields -->
-    {% for key, value in worklog.extras.items() %}
-    <label for="{{ key }}">{{ key }}</label>
-    <input type="text" name="{{ key }}" value="{{ value }}">
-    {% endfor %}
+    {% if worklog.extras %}
+      {% for key, value in worklog.extras.items() %}
+        <label for="{{ key }}">{{ key }}</label>
+        <input type="text" name="{{ key }}" value="{{ value }}">
+      {% endfor %}
+    {% endif %}
 
     <div class="extra-container"></div>
     <button class="add-extra">Add extra</button>

@@ -88,19 +88,23 @@ $(document).ready(function () {
   });
 
   // Add functionality to the "Add extra" button
-  $('.add-extra').on("click", function () {
+  $(".edit-form-container").on("click", ".add-extra", function () {
+    // Prevent the click event from propagating to the form
+    event.preventDefault();
+    //event.stopPropagation();
+
     // Create new label and input elements
     let newLabel1 = $('<label for="extra-key">Key:</label>');
-    let newInput1 = $('<input type="text" name="extra-key" class="extra-key">');
+    let newInput1 = $('<input type="text" class="extra-key">');
     let newLabel2 = $('<label for="extra-value">Value:</label>');
-    let newInput2 = $('<input type="text" name="extra-value" class="extra-value">');
+    let newInput2 = $('<input type="text" class="extra-value">');
 
     // Add a space between labels and inputs
     newLabel1.append('&nbsp;');
     newLabel2.append('&nbsp;');
 
     // Add a container for the labels and inputs
-    $(".edit-form-container .extra-container").append(newLabel1, newInput1, newLabel2, newInput2);
+    $("#edit-worklog-form").append(newLabel1, newInput1, newLabel2, newInput2);
   });
 
   // Handle form submission asynchronously
