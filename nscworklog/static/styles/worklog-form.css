@@ -1,0 +1,81 @@
+/* Overall form styling */
+.edit-form-container {
+  padding: 0 30px 0 10px;
+  display: flex;
+	flex-flow: column;
+	flex: 1;
+	overflow-y: auto;
+	height: 100%;
+	width: 100%;
+}
+
+/* Label styling */
+.edit-form-container label {
+  color: #000;
+  display: block;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+
+/* Input field styling */
+.edit-form-container input[type="text"] {
+  font-family: inherit;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 7px 10px;
+  width: 100%;
+}
+
+.edit-form-container textarea {
+  font-family: inherit;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 4px;
+  width: 100%;
+  padding: 7px 10px;
+}
+
+.button-container {
+  width: 100%;
+  text-align: center;
+  
+  padding: 10px 0;
+  bottom: 10;
+}
+
+/* Button styling */
+.add-extra {
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.save-btn {
+  float: left;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.back-btn {
+  float: left;
+  margin-left: 100px;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

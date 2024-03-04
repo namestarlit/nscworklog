@@ -4,18 +4,21 @@
     <!-- Add form fields dynamically based on your worklog structure -->
     <label for="title">Title</label>
     <input type="text" name="title" value="{{ worklog.title }}">
-    
-    <label for="description">Description</label>
-    <textarea name="description">{{ worklog.description }}</textarea>
 
-    <!-- Traverse the worklogs.extras list and repopulate the extras fields -->
-    {% for extra in worklog.extras %}
-      {% for key, value in extra.items() %}
-        <label for="{{ key }}">{{ key }}</label>
-        <input type="text" name="{{ key }}" value="{{ value }}">
-      {% endfor %}
+    <label for="description">Description</label>
+    <textarea name="description" class="auto-size">{{ worklog.description }}</textarea>
+
+    <!-- Traverse the worklogs.extras dict and repopulate the extras fields -->
+    {% for key, value in worklog.extras.items() %}
+    <label for="{{ key }}">{{ key }}</label>
+    <input type="text" name="{{ key }}" value="{{ value }}">
     {% endfor %}
 
-    <button type="submit">Save</button>
+    <div class="extra-container"></div>
+    <button class="add-extra">Add extra</button>
+    <div class="button-container">
+      <button class="save-btn" type="submit">Save</button>
+      <button class="back-btn">Back</button>
+    </div>
   </form>
 </div>
