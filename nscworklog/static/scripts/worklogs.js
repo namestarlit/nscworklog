@@ -30,16 +30,19 @@ $(document).ready(function () {
       $(".header").text("Completed Worklogs"); // Change header
       $(".content-categories").hide(); // Hide categories section
       $(".add-worklog").hide(); // Hide form section
+      $(".edit-form-container").hide(); // Hide worklog form section if displayed
       selectedNav = "completed";
     } else if (selectedId === "filter-all") {
       $(".header").text("All Worklogs"); // Change header
       $(".content-categories").hide(); // Hide categories section
       $(".add-worklog").hide(); // Hide form section
+      $(".edit-form-container").hide(); // Hide worklog form section if displayed
       selectedNav = "all";
     } else {
       $(".header").text("Worklogs"); // Change header
       $(".content-categories").show(); // Show categories section
       $(".add-worklog").show(); // Show form section
+      $(".edit-form-container").hide(); // Hide worklog form section if displayed
       selectedNav = "pending";
     }
     // Fetch and update worklogs based on the selected input tag

@@ -1,5 +1,6 @@
 $(document).ready(function () {
   let worklogId;
+  const textarea = $('.edit-form-container').find('textarea.auto-size');
 
   // Attach click event listener to worklogs list (delegated to its parent)
   $("#worklogs-list").on("click", ".worklogs", function () {
@@ -23,7 +24,7 @@ $(document).ready(function () {
   });
 
   // Attach click event listener to go back button in the detailed view
-  $(".go-back-btn").on("click", function () {
+  $(".back-btn").on("click", function () {
     // Show the worklog list and hide the detailed view
     $(".worklogs-wrapper").show();
     $(".worklog-info").hide();
@@ -40,10 +41,8 @@ $(document).ready(function () {
     list.append(`<dt>Title</dt><dd>${worklog.title}</dd>`);
     list.append(`<dt>Description</dt><dd>${worklog.description}</dd>`);
     // Add other worklog properties dynamically
-    $.each(worklog.extras, function (_, item) {
-      for (const [key, value] of Object.entries(item)) {
-        list.append(`<dt>${key}</dt><dd>${value}</dd>`);
-      }
+    $.each(worklog.extras, function (key, value) {
+      list.append(`<dt>${key}</dt><dd>${value}</dd>`);
     });
 
     // Show the button container once the script is loaded
@@ -52,16 +51,33 @@ $(document).ready(function () {
     worklogInfo.fadeIn();
   }
 
+  // Function to resize the textarea based on content with an adjustment
+  function resizeTextarea() {
+    const initialHeight = textarea.prop('scrollHeight');
+    textarea.height(initialHeight + 2); // Adjust for potential border/padding
+  }
+
   // Attach click event listener to edit button
   $(".worklog-info").on("click", ".edit-btn", function () {
     // Make an Ajax request to get the worklog details
     $.ajax({
-      url: `/worklogs/${worklogId}/edit`, // Replace with your actual edit endpoint
+      url: `/worklogs/${worklogId}/edit`,
       method: "GET",
       success: function (editFormHtml) {
         console.log(editFormHtml);
-        $(".edit-form-container").html(editFormHtml);
-        console.log($(".edit-form-container").html());  // Log the content
+        $(".edit-form-container").html(editFormHtml); // Populate form
+        // Call resize function on initial load (after content is populated)
+        resizeTextarea();
+        // Attach event listener for input changes (user typing or pasting)
+        textarea.on('input', function () {
+          const currentHeight = textarea.height();
+          const scrollHeight = textarea.prop('scrollHeight');
+
+          // Only resize if content exceeds current height (avoids unnecessary adjustments)
+          if (scrollHeight > currentHeight) {
+            textarea.height(scrollHeight + 2); // Adjust for potential border/padding
+          }
+        });
         $(".edit-form-container").show();
         $(".worklog-info").hide();
       },
@@ -69,6 +85,22 @@ $(document).ready(function () {
         console.error("Error fetching edit form:", error);
       }
     });
+  });
+
+  // Add functionality to the "Add extra" button
+  $('.add-extra').on("click", function () {
+    // Create new label and input elements
+    let newLabel1 = $('<label for="extra-key">Key:</label>');
+    let newInput1 = $('<input type="text" name="extra-key" class="extra-key">');
+    let newLabel2 = $('<label for="extra-value">Value:</label>');
+    let newInput2 = $('<input type="text" name="extra-value" class="extra-value">');
+
+    // Add a space between labels and inputs
+    newLabel1.append('&nbsp;');
+    newLabel2.append('&nbsp;');
+
+    // Add a container for the labels and inputs
+    $(".edit-form-container .extra-container").append(newLabel1, newInput1, newLabel2, newInput2);
   });
 
   // Handle form submission asynchronously
@@ -93,7 +125,7 @@ $(document).ready(function () {
     });
   });
 
-  // Attach click event listener to delee button
+  // Attach click event listener to delete button
   $(".delete-btn").on("click", function () {
     // Retrive the worklogId from the data attribute
     const worklogId = $(".worklog-info").data("worklog-id");
