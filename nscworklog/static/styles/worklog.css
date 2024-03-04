@@ -53,8 +53,11 @@
 
 .worklog-info dl {
   /* Styles for the dl element */
-  margin: 0;
-  padding: 0;
+	font-family: 'DM Sans', sans-serif;
+	font-size: 13px;
+	line-height: 1.6;
+	margin: 0;
+	width: 100%;
 }
 
 .worklog-info dl dt {
@@ -74,12 +77,11 @@
 	text-align: center;
 	
 	padding: 10px 0;
-	bottom: 10;
 }
 
 .delete-btn {
 	float: left;
-	margin-left: 40px;
+	margin-left: 100px;
 	background-color: red;
 	color: #fff;
 	font-weight: bold;
