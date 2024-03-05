@@ -52,7 +52,6 @@ $(document).ready(function () {
       url: `/worklogs/${worklogId}/edit`,
       method: 'GET',
       success: function (editFormHtml) {
-        console.log(editFormHtml);
         $('.edit-form-container').html(editFormHtml);
         resizeTextarea();
         textarea.on('input', function () {
@@ -104,7 +103,9 @@ $(document).ready(function () {
       data: formData,
       success: function (updatedWorklog) {
         updateWorklogDetails(updatedWorklog);
-        $('.edit-form-container').hide();
+
+        $(".worklog-info").show();
+        $(".edit-form-container").hide();
       },
       error: function (error) {
         console.error('Error updating worklog:', error);
