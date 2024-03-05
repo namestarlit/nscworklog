@@ -2,24 +2,31 @@
 <div id="edit-form-template" type="text/template">
   <form id="edit-worklog-form" method="POST">
     <div id="input-div">
-    <!-- Add form fields dynamically based on your worklog structure -->
-    <label for="title">Title</label>
-    <input type="text" name="title" value="{{ worklog.title }}">
+      <!-- Add form fields dynamically based on your worklog structure -->
+      <label for="title">Title</label>
+      <input type="text" name="title" value="{{ worklog.title }}">
 
-    <label for="description">Description</label>
-    <textarea name="description" class="auto-size">{{ worklog.description }}</textarea>
+      <label for="description">Description</label>
+      <textarea name="description" class="auto-size">{{ worklog.description }}</textarea>
 
-    <!-- Traverse the worklogs.extras dict and repopulate the extras fields -->
-    {% if worklog.extras %}
+      <!-- Traverse the worklogs.extras dict and repopulate the extras fields -->
+      {% if worklog.extras %}
       {% for key, value in worklog.extras.items() %}
-        <label for="{{ key }}">{{ key }}</label>
-        <input type="text" name="{{ key }}" value="{{ value }}">
+      <label for="{{ key }}">{{ key }}</label>
+      <input type="text" name="{{ key }}" value="{{ value }}">
       {% endfor %}
-    {% endif %}
+      {% endif %}
     </div>
 
     <div class="extra-container"></div>
     <button class="add-extra">Add extra</button>
+    <label for="Status">Status</label>
+    <div class="radio-container">
+      <input type="radio" id="pending" name="status" value="pending" {% if worklog.status == "pending" %} checked {% endif %}>
+      <label for="pending">Pending</label>
+      <input type="radio" id="completed" name="status" value="completed" {% if worklog.status == "completed" %} checked {% endif %}>
+      <label for="completed">Completed</label>
+    </div>
     <div class="button-container">
       <button class="save-btn" type="submit">Save</button>
       <button class="back-btn">Back</button>

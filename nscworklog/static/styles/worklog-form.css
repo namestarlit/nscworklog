@@ -54,7 +54,43 @@
   border-radius: 7px;
   padding: 5px 10px;
   cursor: pointer;
-  margin: 10px 0;
+  margin-top: 10px;
+}
+
+/* Radio styling */
+.radio-container {
+  display: flex;
+  align-items: center;
+}
+
+.radio-container input[id="pending"] {
+  margin-left: 0;
+}
+
+.radio-container input[id="completed"] {
+  margin-left: 50px;
+}
+
+/* Style for radio buttons (unselected) */
+.radio-container input[type="radio"] {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Style for radio buttons (selected) */
+.radio-container input[type="radio"]:checked {
+  border-color: black;
+  background-color: black;
+}
+
+.radio-container input[type="radio"]:checked + label {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .save-btn {
