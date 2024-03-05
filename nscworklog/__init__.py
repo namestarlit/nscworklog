@@ -1,4 +1,5 @@
 """Flask init methods"""
+
 from flask import Flask
 from flask_login import LoginManager
 from configuration import Config

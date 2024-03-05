@@ -25,10 +25,8 @@ class LoginForm(FlaskForm):
         """checks validation of username & password."""
 
         user = storage.get_user_by_filter("username", username.data)
-        if user is None :
-            raise ValidationError(
-                "Invalid username or password."
-            )
+        if user is None:
+            raise ValidationError("Invalid username or password.")
 
 
 class RegistrationForm(FlaskForm):
@@ -88,6 +86,7 @@ class EditProfileForm(FlaskForm):
                     "Username taken, " "please choose a different username."
                 )
 
+
 class AddWorklogForm(FlaskForm):
     """Adds a new worklog entry"""
 
@@ -95,16 +94,3 @@ class AddWorklogForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "Add a worklog, press [ Enter ] to save"},
     )
-
-class ExtrasForm(FlaskForm):
-    key = StringField('Key')
-    value = StringField('Value')
-
-class WorklogForm(FlaskForm):
-    """Displays worklog details"""
-
-    title = StringField('Title')
-    description = TextAreaField('Description')
-    extras = FieldList(FormField(ExtrasForm), min_entries=1)
-
-    save = SubmitField('Save')

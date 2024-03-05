@@ -6,7 +6,9 @@ from worklog.base import Base
 class Worklog(Base):
     """Worklog class implementantion"""
 
-    def __init__(self, title, user_id, description=None, status="pending", *args, **kwargs):
+    def __init__(
+        self, title, user_id, description=None, status="pending", *args, **kwargs
+    ):
         """Initializes an instance of Resource class"""
         super().__init__(*args, **kwargs)
         self.title = title

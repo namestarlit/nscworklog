@@ -9,7 +9,7 @@ from nscworklog import storage
 from worklog.user import User
 from worklog.worklog import Worklog
 from forms import LoginForm, RegistrationForm
-from forms import EditProfileForm, WorklogForm, AddWorklogForm
+from forms import EditProfileForm, AddWorklogForm
 
 
 @app.route("/")
@@ -162,19 +162,18 @@ def get_worklog(worklog_id):
     worklog = storage.get("worklogs", worklog_id)
     worklog = worklog.safe_dict()
     worklog.pop("user_id", None)
-    
+
     return jsonify(worklog)
 
-@app.route('/worklogs/<worklog_id>/edit', methods=['GET'])
+
+@app.route("/worklogs/<worklog_id>/edit", methods=["GET"])
 def edit_worklog(worklog_id):
-    # Retrieve worklog data based on worklog_id (this is just an example)
     worklog = storage.get("worklogs", worklog_id)
     worklog = worklog.safe_dict()
     worklog.pop("user_id", None)
 
     # Render the HTML template with the worklog data
-    return render_template('edit_worklog.html', worklog=worklog)
-
+    return render_template("edit_worklog.html", worklog=worklog)
 
 
 @app.route("/worklogs/<worklog_id>", methods=["POST"])
@@ -193,31 +192,57 @@ def update_worklog(worklog_id):
 
     # Process extras, assuming extras is a dictionary
     new_extras = {}
+
     for key, value in form_data.items():
         if key not in ["title", "description", "status"]:
-            new_extras[key] = value
+            if key.startswith("key-") or key.startswith("value-"):
+                # Split the key to get the index part
+                key_parts = key.split("-")
+                if len(key_parts) == 2 and key_parts[0] == "key":
+                    index = key_parts[1]
+                    value_key = f"value-{index}"
+                    # Check if the corresponding value exists
+                    if value_key in form_data:
+                        new_value = form_data[value_key]
+                        # Only add to new_extras if the value is not empty
+                        if new_value.strip():
+                            new_extras[new_value] = form_data[value_key]
+                        elif hasattr(worklog, "extras") and new_value in worklog.extras:
+                            del worklog.extras[new_value]
+            else:
+                if (
+                    not value.strip()
+                    and hasattr(worklog, "extras")
+                    and key in worklog.extras
+                ):
+                    del worklog.extras[key]
 
-    worklog.extras = new_extras
+    # Check if the worklog object has the
+    if hasattr(worklog, "extras"):
+        worklog.extras.update(**new_extras)
+    else:
+        worklog.extras = new_extras
 
     storage.update(worklog._id, worklog)
 
     updated_worklog = {
         "title": worklog.title,
         "description": worklog.description,
-        "extras": worklog.extras
+        "extras": worklog.extras,
     }
 
     return jsonify(updated_worklog)
+
 
 @app.route("/worklogs/<worklog_id>", methods=["DELETE"])
 @login_required
 def delete_worklog(worklog_id):
     """Delete a worklog"""
     worklog = storage.get("worklogs", worklog_id)
-    
+
     try:
         storage.delete("worklogs", worklog._id)
     except Exception as e:
         abort(500, "Internal Server Error")
-    
+
     return jsonify({})
