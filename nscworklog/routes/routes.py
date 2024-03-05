@@ -189,6 +189,7 @@ def update_worklog(worklog_id):
 
     worklog.title = form_data.get("title")
     worklog.description = form_data.get("description")
+    worklog.status = form_data.get("status")
 
     # Process extras, assuming extras is a dictionary
     new_extras = {}
