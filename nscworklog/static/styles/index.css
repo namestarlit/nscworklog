@@ -41,7 +41,7 @@ nav {
 	align-items: center;
 	justify-content: space-between;
 	max-width: 1300px;
-	margin: 0 0 0 20px;
+	margin: 0;
 }
 
 .right-nav {
@@ -51,7 +51,6 @@ nav {
 .right-nav li {
 	display: inline;
 	padding-left: 10px;
-	margin-right: 10px;
 }
 
 .right-nav li a {
