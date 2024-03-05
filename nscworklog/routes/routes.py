@@ -195,7 +195,7 @@ def update_worklog(worklog_id):
 
     for key, value in form_data.items():
         if key not in ["title", "description", "status"]:
-            if key.startswith("key-") or key.startswith("value-"):
+            if key.startswith("key-"):
                 # Split the key to get the index part
                 key_parts = key.split("-")
                 if len(key_parts) == 2 and key_parts[0] == "key":
@@ -206,7 +206,7 @@ def update_worklog(worklog_id):
                         new_value = form_data[value_key]
                         # Only add to new_extras if the value is not empty
                         if new_value.strip():
-                            new_extras[new_value] = form_data[value_key]
+                            new_extras[value] = new_value
                         elif hasattr(worklog, "extras") and new_value in worklog.extras:
                             del worklog.extras[new_value]
             else:
