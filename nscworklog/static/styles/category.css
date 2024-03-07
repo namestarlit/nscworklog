@@ -40,8 +40,8 @@
 	cursor: pointer;
 }
 
-#pending:checked+label,
-#completed:checked+label {
+#nav-pending:checked+label,
+#nav-completed:checked+label {
 	color: var(--checkbox-color);
 	border-bottom: 2px solid var(--checkbox-color);
 }
